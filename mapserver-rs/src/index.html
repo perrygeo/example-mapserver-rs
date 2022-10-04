@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Rust Mapserver Demo</title>
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+		integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+		crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+		integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+		crossorigin=""></script>
+	<style>
+		html,
+		body {
+			height: 100%;
+			margin: 12;
+		}
+
+	</style>
+</head>
+
+<body>
+	<h1> Rust mapping service demo </h1>
+	<form onchange="resetLayer()">
+		Year: <input id="timestamp" name="timestamp" type="number" value="2019">
+		&nbsp; &nbsp;
+		Style: <input id="style" name="style" type="text" value="rgb_">
+		<input type="submit">
+	</form>
+	</div>
+	<br />
+
+	<div id="map" style="width: 100%; height: 100%;"></div>
+	<script>
+
+		function getRandomInt(min, max) {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
+		var map = L.map('map').setView([40.507, -105.151], 19);
+		var tiles;
+
+
+		function resetLayer(lyrname) {
+			const timestamp = document.getElementById("timestamp").value;
+			const style = document.getElementById("style").value;
+
+			if (tiles !== undefined) {
+				map.removeLayer(tiles);
+			}
+			// cache buster
+			// const uid = getRandomInt(0, 1000000000);
+			const uid = 0;
+
+			// Tile layer itself
+			tiles = L.tileLayer(`./map/${timestamp}/{z}/{x}/{y}`, {maxZoom: 19}).addTo(map);
+
+			// Grid Layer for debugging
+			L.GridLayer.GridDebug = L.GridLayer.extend({
+				createTile: function (coords) {
+					const tile = document.createElement('div');
+					tile.style.outline = '1px dashed #76767644';
+					tile.style.fontWeight = 'light';
+					tile.style.fontSize = '8pt';
+					tile.style.color = 'grey';
+					tile.innerHTML = [coords.z, coords.x, coords.y].join('/');
+					return tile;
+				},
+			});
+			L.gridLayer.gridDebug = function (opts) {
+				return new L.GridLayer.GridDebug(opts);
+			};
+			map.addLayer(L.gridLayer.gridDebug());
+		}
+
+		resetLayer();
+
+	</script>
+</body>
+
+</html>

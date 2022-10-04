@@ -1,0 +1,20 @@
+[package]
+name = "mapserver-sys"
+version = "0.1.1"
+authors = ["Matthew Perry <perrygeo@gmail.com>"]
+edition = "2018"
+links = "mapserver"
+license-file = "LICENSE"
+description = "Rust bindings to mapserver"
+readme = "README.md"
+keywords = ["mapserver", "raster", "array"]
+categories = ["database", "data-structures", "external-ffi-bindings", "science"]
+
+[dependencies]
+bindgen = "0.58.1"
+libc = "0.2.95"
+
+[build-dependencies]
+bindgen = "0.58.1"
+cmake = "0.1"
+fs_extra = "1.2.0"
