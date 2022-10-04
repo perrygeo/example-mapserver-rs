@@ -38,7 +38,7 @@ Inspired by https://www.youtube.com/watch?v=pePqWoTnSmQ
 
 ## Opinionated Rust web server
 
-See the [`mapserver-rs`] directory.
+See the [`mapserver-rs`](./mapserver-rs) directory.
 
 - **Embrace the mapfile**, make it the primary interface. No need to reimplement
   the rendering logic in Rust! Usage of libmapserver will be high-level and the
