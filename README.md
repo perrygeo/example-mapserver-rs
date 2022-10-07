@@ -17,10 +17,6 @@ The [mapfile](https://www.mapserver.org/mapfile/) is the primary mechansim for c
 for rendering geospatial data into map images.
 
 
-https://user-images.githubusercontent.com/1151287/194422525-1b12f59d-a932-4f1c-bb20-01038b4368b1.mp4
-
-
-
 
 ## C library quirks
 
